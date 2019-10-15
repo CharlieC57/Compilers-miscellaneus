@@ -13,8 +13,7 @@ class estado:
                 if self.id!="Error":
                     index=self.trancisiones[c].index("Error")
                     self.trancisiones[c].pop(index)
-            except Exception as e:
-                print(e)
+            except:
                 pass
     def trans(self,c):
         return self.trancisiones[c]
@@ -31,17 +30,41 @@ class afn:
         self.finales=finales
         for x in deltas:
             self.estados[x[0]].addTrans(x[1],x[2])
-    def evaluar(self,cadena,index,actual,recorrido):
+    def evaluar(self,cadena,index,actual,recorrido,error):
         if index>len(cadena)-1:
-            if actual in self.finales:
-                print(recorrido)
-                print("aceptado")
+                try:
+                    siguientes=self.estados[str(actual)].trans("E")
+                    for x in siguientes:
+                        anexo=recorrido.copy()
+                        anexo.append("P("+str(actual)+",E)->"+str(x))
+                        self.evaluar(cadena,index,x,anexo,error)
+                except:
+                    if actual in self.finales:
+                        print("aceptado")
+                        print(recorrido)
+                        if len(error)>0:
+                            print("Errores manejados:")
+                            for e in error:
+                                print(e)
+
         else:
-            siguientes=self.estados[str(actual)].trans(cadena[index])
-            for x in siguientes:
-                anexo=recorrido.copy()
-                anexo.append("P("+str(actual)+","+cadena[index]+")->"+str(x))
-                self.evaluar(cadena,index+1,x,anexo)
+            if cadena[index] in self.alfabeto:
+                try:
+                    siguientes=self.estados[str(actual)].trans("E")
+                    for x in siguientes:
+                        anexo=recorrido.copy()
+                        anexo.append("P("+str(actual)+",E)->"+str(x))
+                        self.evaluar(cadena,index,x,anexo,error)
+                except:
+                    siguientes=self.estados[str(actual)].trans(cadena[index])
+                    for x in siguientes:
+                        anexo=recorrido.copy()
+                        anexo.append("P("+str(actual)+","+cadena[index]+")->"+str(x))
+                        self.evaluar(cadena,index+1,x,anexo,error)
+            else:
+                maserror=error.copy()
+                maserror.append("P("+str(actual)+","+cadena[index]+")")
+                self.evaluar(cadena,index+1,actual,recorrido,maserror)    
 
 
 #formato archivo:
@@ -54,6 +77,7 @@ def lectura():
     datos=[]
     deltas=[]
     recorrido=[]
+    error=[]
     nombre=input("Indique el nombre del archivo contenedor: ")
     with open(nombre, "r") as file:
         for i in range(4):
@@ -66,7 +90,7 @@ def lectura():
             deltas.append(i.split(','))
     automata=afn(datos[0],datos[1],datos[2],datos[3],deltas)
     palabra=input("Introduzca una palabra a evaluar: ")
-    automata.evaluar(palabra,0,automata.actual,recorrido)
+    automata.evaluar(palabra,0,automata.actual,recorrido,error)
     #print(automata.estados['0'].trancisiones)
     #print(automata.alfabeto)
     #print(automata.actual[0])
