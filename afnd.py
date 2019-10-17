@@ -1,5 +1,5 @@
 #!/usr/bin/python3.5
-
+import threading
 class estado:
     def __init__(self,nombre,alfabeto):
         self.id=nombre
