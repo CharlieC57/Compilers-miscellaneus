@@ -21,7 +21,8 @@ lli inverso(lli a,lli  m){
   if(1==extgcd(a,m,a_inv,basura))
   return a_inv;
   else{ 
-    cout << a << " No tiene inverso";
+    cout << a << " No tiene inverso"<<endl;
+    cout << basura << endl;
     return 0;
   }
 
@@ -60,9 +61,15 @@ bool primalidad(lli n){
   return false;
 }
 
-lli main(){
-  lli x,y;
-  lli a=15,b=8;
-  cout << inverso(14,23) <<endl;
+
+int main(){
+  lli a =inverso(121,51504);
+  cout<<a<<endl;
+  a=exp(121,105,51504);
+  cout<<a<<endl;
+  a=exp(20857,39177,51504);
+  cout<<a<<endl;
+  a=exp(31,2,28703);
+  cout<<a<<endl;
   return 0;
 }
