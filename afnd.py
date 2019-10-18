@@ -1,5 +1,5 @@
 #!/usr/bin/python3.5
-
+import threading
 class estado:
     def __init__(self,nombre,alfabeto):
         self.id=nombre
@@ -37,7 +37,8 @@ class afn:
                     for x in siguientes:
                         anexo=recorrido.copy()
                         anexo.append("P("+str(actual)+",E)->"+str(x))
-                        self.evaluar(cadena,index,x,anexo,error)
+                        hilo=threading.Thread(target=self.evaluar, args=(cadena,index,x,anexo,error))
+                        hilo.start()
                 except:
                     if actual in self.finales:
                         print("aceptado")
@@ -54,17 +55,21 @@ class afn:
                     for x in siguientes:
                         anexo=recorrido.copy()
                         anexo.append("P("+str(actual)+",E)->"+str(x))
-                        self.evaluar(cadena,index,x,anexo,error)
+                        hilo=threading.Thread(target=self.evaluar, args=(cadena,index,x,anexo,error))
+                        hilo.start()
                 except:
                     siguientes=self.estados[str(actual)].trans(cadena[index])
                     for x in siguientes:
                         anexo=recorrido.copy()
                         anexo.append("P("+str(actual)+","+cadena[index]+")->"+str(x))
-                        self.evaluar(cadena,index+1,x,anexo,error)
+                        hilo=threading.Thread(target=self.evaluar, args=(cadena,index+1,x,anexo,error))
+                        hilo.start()
             else:
                 maserror=error.copy()
                 maserror.append("P("+str(actual)+","+cadena[index]+")")
-                self.evaluar(cadena,index+1,actual,recorrido,maserror)    
+                hilo=threading.Thread(target=self.evaluar, args=(cadena,index+1,actual,recorrido,maserror))
+                hilo.start()
+  
 
 
 #formato archivo:
