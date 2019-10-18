@@ -64,12 +64,17 @@ bool primalidad(lli n){
 
 int main(){
   lli a =inverso(121,51504);
-  cout<<a<<endl;
-  a=exp(121,105,51504);
-  cout<<a<<endl;
-  a=exp(20857,39177,51504);
-  cout<<a<<endl;
-  a=exp(31,2,28703);
-  cout<<a<<endl;
+  if(primalidad(99823)) cout << "si" <<endl;
+  a=exp(71,2,99823);
+  cout << a <<endl;
+  a=exp(105,2,99823);
+  cout << a <<endl;
+  a=exp(105,17084,99823);
+  a=(a*82)%99823;
+  cout << a <<endl;
+  a=exp(99751,45412,99823);
+  cout << a <<endl;
+  a=(a*70200)%99823;
+  cout << a <<endl;
   return 0;
 }
