@@ -1,8 +1,12 @@
-var [a-zA-z]+[a-zA-z0-9\-_]*
+var [a-zA-z]+[a-zA-z0-9_]*
 int [0-9]+
+denom [1-9][0-9]*
+dec {int}\.{int}
+num {int}|{dec}
 %%
 {var} {printf("var valida");}
 [-+]?{int} {printf("entero valido");}
-[-+]?{int}\.{int} {printf("decimal valido");}
-{int}\*\*{int} {printf("Potencia valida");}
-{int}[+\-*/]{int}|mod({int}) {printf("operacion valida");}
+[-+]?{dec} {printf("decimal valido");}
+{num}\*\*{int} {printf("Potencia valida");}
+{num}"/"{denom} {printf("division valida");}
+{num}[+\-*]{num}|mod({int}) {printf("operacion valida");}
