@@ -61,7 +61,7 @@ bool primalidad(lli n){
   return false;
 }
 
-int suma(lli x1,lli y1,lli x2,lli y2,lli x3,lli y3,lli k,lli p){
+void suma(lli x1,lli y1,lli x2,lli y2,lli &x3,lli &y3,lli k,lli p){
     lli lambda;
     if(x1==x2 && y1==y2){
       lambda=((3*x1*x1+k)*inverso(2*y1,p))%p;
@@ -75,8 +75,13 @@ int suma(lli x1,lli y1,lli x2,lli y2,lli x3,lli y3,lli k,lli p){
 }
 //q=(p+1+2*a)/4
 //k=(x*x*x-y*y)inverso(x,p)
+//y1=k*alfa
+//y2=P+k*Q;
+//14514,1617
 /*void curva(){
   p=a*a+b*b;
+  p%4==1;
+  (a+b)%4==1;
 }*/
 
 bool probark(lli k,lli p){
@@ -100,5 +105,19 @@ int main(){
   a=(a*70200)%99823;
   cout << a <<endl;
   */
+ if(primalidad(5449)) cout << "si" << endl;
+ lli a=inverso(8715,21557);
+ cout << a << endl;
+ a=exp(21556/4,4005,21557);
+  cout << a << endl;
+ a=exp(21556/2,4005,21557);
+  cout << a << endl;
+  lli x,y;
+ a=inverso(4654*2,21557);
+ cout << a << endl;
+ a=inverso(256,5449);
+ cout << a << endl;
+  suma(8715,4654,8715,4654,x,y,4005,21557);
+  cout << x << "," << y << endl;
   return 0;
 }
