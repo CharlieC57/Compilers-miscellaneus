@@ -12,7 +12,7 @@ NUM [0-9]+
                 }
 {NUM}\.{NUM}    {
 		printf("Numero real(float) %s\n",yytext);
-                yylval.entero = atof(yytext);
+                yylval.real = atof(yytext);
                 return (REAL);
                 }
 
