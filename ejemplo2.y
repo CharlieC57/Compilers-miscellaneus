@@ -27,6 +27,7 @@ input:    /* cadena vacía */
 
 line:     '\n'
         | exp '\n'  { printf ("\tresultado: %d\n", $1); }
+        | expr '\n' { printf ("\tresultado: %f\n", $1); }
 ;
              
 exp:     ENTERO	{ $$ = $1; }
@@ -41,14 +42,22 @@ expr:   REAL { $$ = $1;}
 	| expr '*' expr        { $$ = $1 * $3;	}
   | expr '-' expr         { $$ = $1 - $3;}
   | expr '/' expr       { $$ = $1 / $3;	}
-             
+  | exp '+' expr        { $$ = $1 + $3;    }
+	| exp '*' expr        { $$ = $1 * $3;	}
+  | exp '-' expr         { $$ = $1 - $3;}
+  | exp '/' expr       { $$ = $1 / $3;	}
+  | expr '+' exp        { $$ = $1 + $3;    }
+	| expr '*' exp        { $$ = $1 * $3;	}
+  | expr '-' exp         { $$ = $1 - $3;}
+  | expr '/' exp       { $$ = $1 / $3;	}
 %%
 
 int main() {
   yyparse();
+  return 0;
 }
              
-yyerror (char *s)
+void yyerror (char *s)
 {
   printf ("--%s--\n", s);
 }
